@@ -5,6 +5,7 @@ from pydantic import BaseModel
 from passlib.context import CryptContext
 from jose import jwt, JWTError
 import secrets
+import os
 from fastapi.middleware.cors import CORSMiddleware
 
 
@@ -12,14 +13,22 @@ app = FastAPI()
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
-SECRET_KEY = "myseckey"
+SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = "HS256"
+
+if not SECRET_KEY:
+    raise RuntimeError("SECRET_KEY environment variable is required")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/signin")
 
+allowed_origins = ["http://localhost:5173"]
+frontend_url = os.getenv("FRONTEND_URL")
+if frontend_url:
+    allowed_origins.append(frontend_url)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # for dev only
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

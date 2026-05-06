@@ -46,6 +46,7 @@ export function Card({ id, title, link, type, description, onDelete, deleting = 
         </div>
 
         <div className="pt-4">
+        
           {type === 'youtube' && (
             <iframe
               className="w-full"

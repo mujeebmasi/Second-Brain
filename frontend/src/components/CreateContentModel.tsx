@@ -133,6 +133,8 @@ export function CreateContentModel({ open, onClose, onCreated }: CreateContentMo
                                 onChange={(e) => setLink(e.target.value)}
                             />
                         )}
+
+                        
                     </div>
                     <div className="flex justify-center mt-2">
                         <Button variant="primary" text={loading ? "Saving..." : "Submit"} type="submit" className="w-full" />
