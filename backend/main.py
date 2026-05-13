@@ -21,10 +21,10 @@ if not SECRET_KEY:
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/signin")
 
-allowed_origins = ["http://localhost:5173"]
-frontend_url = os.getenv("FRONTEND_URL")
-if frontend_url:
-    allowed_origins.append(frontend_url)
+allowed_origins = [
+    "http://localhost:5173",
+    "https://second-brain-2ropsgeb4-mujeebmasis-projects.vercel.app"
+]
 
 app.add_middleware(
     CORSMiddleware,
