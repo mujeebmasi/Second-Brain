@@ -1,7 +1,17 @@
-// import React from 'react';
+import { useEffect } from 'react';
 import { ShareIcon } from '../icons/ShareIcon';
 import { YoutubeIcon } from '../icons/Youtube';
 import { TwitterIcon } from '../icons/Twitter';
+
+declare global {
+  interface Window {
+    twttr?: {
+      widgets?: {
+        load: (element?: HTMLElement) => void;
+      };
+    };
+  }
+}
 
 interface CardProps {
   id?: string;
@@ -17,7 +27,45 @@ function twitterToTwitterCom(url: string) {
   return url.replace('x.com', 'twitter.com');
 }
 
+function getYouTubeEmbedUrl(url: string) {
+  try {
+    const parsedUrl = new URL(url);
+    const host = parsedUrl.hostname.replace('www.', '');
+
+    if (host === 'youtu.be') {
+      const videoId = parsedUrl.pathname.split('/').filter(Boolean)[0];
+      return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
+    }
+
+    if (host.includes('youtube.com')) {
+      if (parsedUrl.pathname.startsWith('/embed/')) {
+        return url;
+      }
+
+      const videoId = parsedUrl.searchParams.get('v');
+      if (videoId) {
+        return `https://www.youtube.com/embed/${videoId}`;
+      }
+
+      const shortsMatch = parsedUrl.pathname.match(/\/shorts\/([^/]+)/);
+      if (shortsMatch?.[1]) {
+        return `https://www.youtube.com/embed/${shortsMatch[1]}`;
+      }
+    }
+  } catch {
+    // Fall back to the original URL below.
+  }
+
+  return url.replace('watch?v=', 'embed/');
+}
+
 export function Card({ id, title, link, type, description, onDelete, deleting = false }: CardProps) {
+  useEffect(() => {
+    if (type === 'twitter' && window.twttr?.widgets?.load) {
+      window.twttr.widgets.load();
+    }
+  }, [type, link]);
+
   return (
     <div className="w-full max-w-80">
       <div className="p-4 bg-white rounded-md shadow-md border border-slate-100 min-h-32 min-w-32 hover:shadow-lg transition-shadow">
@@ -50,7 +98,7 @@ export function Card({ id, title, link, type, description, onDelete, deleting = 
           {type === 'youtube' && (
             <iframe
               className="w-full"
-              src={link.replace('watch?v=', 'embed/')}
+              src={getYouTubeEmbedUrl(link)}
               title="YouTube video player"
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
