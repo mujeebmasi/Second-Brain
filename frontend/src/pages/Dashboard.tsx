@@ -127,18 +127,19 @@ export function Dashboard() {
           <div className="mb-4 text-sm text-slate-500">
             {loading ? 'Loading content...' : `Showing ${visibleCards.length} item${visibleCards.length === 1 ? '' : 's'}`}
           </div>
-          <div className="flex gap-4 flex-wrap">
+          <div className="columns-1 gap-4 md:columns-2 xl:columns-3">
             {visibleCards.map((card) => (
-              <Card
-                key={card.id}
-                id={card.id}
-                type={(card.type || 'text') as 'twitter' | 'youtube' | 'text'}
-                link={card.link}
-                title={card.title}
-                description={card.description}
-                onDelete={handleDelete}
-                deleting={deletingId === card.id}
-              />
+              <div key={card.id} className="mb-4 break-inside-avoid inline-block w-full">
+                <Card
+                  id={card.id}
+                  type={(card.type || 'text') as 'twitter' | 'youtube' | 'text'}
+                  link={card.link}
+                  title={card.title}
+                  description={card.description}
+                  onDelete={handleDelete}
+                  deleting={deletingId === card.id}
+                />
+              </div>
             ))}
             {visibleCards.length === 0 && (
               <div className="w-full p-8 rounded-lg border border-dashed border-slate-300 bg-white text-center text-slate-500">
