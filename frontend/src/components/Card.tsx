@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { ShareIcon } from '../icons/ShareIcon';
 import { YoutubeIcon } from '../icons/Youtube';
 import { TwitterIcon } from '../icons/Twitter';
@@ -60,10 +60,41 @@ function getYouTubeEmbedUrl(url: string) {
 }
 
 export function Card({ id, title, link, type, description, onDelete, deleting = false }: CardProps) {
+  const twitterEmbedRef = useRef<HTMLQuoteElement | null>(null);
+
   useEffect(() => {
-    if (type === 'twitter' && window.twttr?.widgets?.load) {
-      window.twttr.widgets.load();
+    if (type !== 'twitter') {
+      return;
     }
+
+    const loadWidgets = () => {
+      window.twttr?.widgets?.load(twitterEmbedRef.current || undefined);
+    };
+
+    if (window.twttr?.widgets?.load) {
+      loadWidgets();
+      return;
+    }
+
+    const script = document.querySelector(
+      'script[src="https://platform.twitter.com/widgets.js"]',
+    ) as HTMLScriptElement | null;
+
+    if (script) {
+      script.addEventListener('load', loadWidgets, { once: true });
+      return () => script.removeEventListener('load', loadWidgets);
+    }
+
+    const newScript = document.createElement('script');
+    newScript.src = 'https://platform.twitter.com/widgets.js';
+    newScript.async = true;
+    newScript.charset = 'utf-8';
+    newScript.addEventListener('load', loadWidgets, { once: true });
+    document.head.appendChild(newScript);
+
+    return () => {
+      newScript.removeEventListener('load', loadWidgets);
+    };
   }, [type, link]);
 
   return (
@@ -108,7 +139,7 @@ export function Card({ id, title, link, type, description, onDelete, deleting = 
           )}
 
           {type === 'twitter' && (
-            <blockquote className="twitter-tweet">
+            <blockquote ref={twitterEmbedRef} className="twitter-tweet">
               <a href={twitterToTwitterCom(link)}></a>
             </blockquote>
           )}
