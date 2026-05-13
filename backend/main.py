@@ -21,14 +21,9 @@ if not SECRET_KEY:
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/v1/signin")
 
-allowed_origins = [
-    "http://localhost:5173",
-    "https://second-brain-2ropsgeb4-mujeebmasis-projects.vercel.app"
-]
-
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=allowed_origins,
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
