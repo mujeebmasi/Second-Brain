@@ -24,6 +24,18 @@ interface CardProps {
 }
 
 function twitterToTwitterCom(url: string) {
+  try {
+    const parsedUrl = new URL(url);
+    const host = parsedUrl.hostname.replace('www.', '').replace('mobile.', '');
+
+    if (host === 'x.com' || host === 'twitter.com') {
+      parsedUrl.hostname = 'twitter.com';
+      return parsedUrl.toString();
+    }
+  } catch {
+    // Fall back to simple string replacement below.
+  }
+
   return url.replace('x.com', 'twitter.com');
 }
 
@@ -139,9 +151,19 @@ export function Card({ id, title, link, type, description, onDelete, deleting = 
           )}
 
           {type === 'twitter' && (
-            <blockquote ref={twitterEmbedRef} className="twitter-tweet">
-              <a href={twitterToTwitterCom(link)}></a>
-            </blockquote>
+            <div className="space-y-2">
+              <blockquote ref={twitterEmbedRef} className="twitter-tweet">
+                <a href={twitterToTwitterCom(link)}></a>
+              </blockquote>
+              <a
+                href={twitterToTwitterCom(link)}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex text-xs font-medium text-slate-500 hover:text-slate-700"
+              >
+                Open tweet
+              </a>
+            </div>
           )}
 
           {type === 'text' && (
