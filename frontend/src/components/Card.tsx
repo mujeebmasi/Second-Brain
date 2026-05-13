@@ -110,7 +110,7 @@ export function Card({ id, title, link, type, description, onDelete, deleting = 
   }, [type, link]);
 
   return (
-    <div className="w-full max-w-80">
+    <div className="w-full">
       <div className="min-h-32 min-w-32 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition-shadow hover:shadow-lg">
         <div className="flex justify-between gap-3">
           <div className="flex items-center text-md">
