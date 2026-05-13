@@ -127,7 +127,7 @@ export function Dashboard() {
           <div className="mb-4 text-sm text-slate-500">
             {loading ? 'Loading content...' : `Showing ${visibleCards.length} item${visibleCards.length === 1 ? '' : 's'}`}
           </div>
-          <div className="columns-1 gap-4 md:columns-2 xl:columns-3">
+          <div className="columns-1 gap-4 md:columns-2 xl:columns-4">
             {visibleCards.map((card) => (
               <div key={card.id} className="mb-4 break-inside-avoid inline-block w-full">
                 <Card
