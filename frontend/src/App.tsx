@@ -1,5 +1,6 @@
 import type { ReactElement } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { Home } from './pages/Home';
 import { Dashboard } from './pages/Dashboard';
 import { Signin } from './pages/Signin';
 import { Signup } from './pages/Signup';
@@ -20,7 +21,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Navigate to="/dashboard" replace />} />
+        <Route path="/" element={<Home />} />
         <Route
           path="/dashboard"
           element={
@@ -37,7 +38,7 @@ function App() {
           path="/signup"
           element={isAuthenticated() ? <Navigate to="/dashboard" replace /> : <Signup />}
         />
-        <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );

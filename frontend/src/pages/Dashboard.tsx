@@ -61,7 +61,7 @@ export function Dashboard() {
     setShareLink('');
     setContent([]);
     setError('');
-    window.location.href = '/signin';
+    window.location.href = '/';
   };
 
   const visibleCards =
