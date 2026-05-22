@@ -35,7 +35,6 @@ export function Sidebar({ selectedFilter, onFilterChange, mobileOpen, onCloseMob
 				<SidebarItem text="YouTube" icon={<YoutubeIcon />} active={selectedFilter === "youtube"} onClick={() => onFilterChange("youtube")} />
 				<SidebarItem text="Twitter" icon={<TwitterIcon />} active={selectedFilter === "twitter"} onClick={() => onFilterChange("twitter")} />
 				<SidebarItem text="Add New" icon={<PlusIcon />} />
-				<SidebarItem text="Archive" icon={<CrossIcon />} />
 			</nav>
 
 			<div className="absolute bottom-4 left-4 right-4 pt-4 border-t border-slate-100">
