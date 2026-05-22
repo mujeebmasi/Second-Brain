@@ -14,9 +14,10 @@ interface SidebarProps {
   onCloseMobile: () => void;
 	isAuthenticated: boolean;
 	onLogout: () => void;
+	onAddNew?: () => void;
 }
 
-export function Sidebar({ selectedFilter, onFilterChange, mobileOpen, onCloseMobile, isAuthenticated, onLogout }: SidebarProps) {
+export function Sidebar({ selectedFilter, onFilterChange, mobileOpen, onCloseMobile, isAuthenticated, onLogout, onAddNew }: SidebarProps) {
 	return (
 		<>
 			{mobileOpen && <button onClick={onCloseMobile} className="md:hidden fixed inset-0 bg-black/35 z-30" aria-label="Close menu" />}
@@ -33,7 +34,7 @@ export function Sidebar({ selectedFilter, onFilterChange, mobileOpen, onCloseMob
 				<SidebarItem text="All Content" icon={<ShareIcon />} active={selectedFilter === "all"} onClick={() => onFilterChange("all")} />
 				<SidebarItem text="YouTube" icon={<YoutubeIcon />} active={selectedFilter === "youtube"} onClick={() => onFilterChange("youtube")} />
 				<SidebarItem text="Twitter" icon={<TwitterIcon />} active={selectedFilter === "twitter"} onClick={() => onFilterChange("twitter")} />
-				<SidebarItem text="Add New" icon={<PlusIcon />} />
+				<SidebarItem text="Add New" icon={<PlusIcon />} onClick={onAddNew} />
 			</nav>
 
 			<div className="absolute bottom-4 left-4 right-4 pt-4 border-t border-slate-100">

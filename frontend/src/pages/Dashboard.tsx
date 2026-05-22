@@ -82,6 +82,7 @@ export function Dashboard() {
         onCloseMobile={() => setMobileSidebarOpen(false)}
         isAuthenticated={isAuthenticated}
         onLogout={handleLogout}
+        onAddNew={() => setModelOpen(true)}
       />
 
       <div className="md:ml-64 container mx-auto px-4 py-6 md:py-8">
