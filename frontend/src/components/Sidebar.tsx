@@ -1,6 +1,5 @@
 import { PlusIcon } from "../icons/PlusIcon";
 import { ShareIcon } from "../icons/ShareIcon";
-import { CrossIcon } from "../icons/CrossIcon";
 import { YoutubeIcon } from "../icons/Youtube";
 import { TwitterIcon } from "../icons/Twitter";
 import { BrainIcon } from "../icons/BrainIcon";
