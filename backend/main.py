@@ -57,7 +57,12 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
     except JWTError:
         raise HTTPException(status_code=401, detail="Invalid or expired token")
 
-
+@app.get("/")
+def root():
+    return {
+        "status": "ok",
+        "message": "Second Brain API is running"
+    }
 
 @app.post("/api/v1/signup")
 def signup(data: SignupSchema):
