@@ -62,7 +62,7 @@ The project follows a full-stack architecture with:
 ### Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/SecondBrain.git
+git clone https://github.com/mujeebmasi/SecondBrain.git
 
 cd SecondBrain
 ```
